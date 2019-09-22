@@ -1,0 +1,32 @@
+language: node_js
+node_js: stable
+
+# S: Build Lifecycle
+install:
+  - npm install yarn terser@3.14 -g
+  - yarn install
+
+
+#before_script:
+ # - npm install -g gulp
+
+script:
+  - yarn run build
+
+after_script:
+  - cd  ./docs/.vuepress/dist
+  - git init
+  - git config user.name "poetries"
+  - git config user.email "jingguanliuye@gmail.com"
+  - git add -A
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages
+# E: Build LifeCycle
+
+branches:
+  only:
+    - master
+env:
+ global:
+   - GH_REF: github.com/poetries/browser-working-principle.git
+   
