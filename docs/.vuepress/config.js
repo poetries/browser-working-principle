@@ -24,7 +24,7 @@ module.exports = ctx => ({
   themeConfig: {
     repo: 'poetries/browser-working-principle',
     lastUpdated: 'Last Updated',
-    docsBranch: 'dev',
+    docsBranch: 'master',
     docsDir: 'docs',
     editLinks: true,
     editLinkText: '帮助我们改善此页面！',
