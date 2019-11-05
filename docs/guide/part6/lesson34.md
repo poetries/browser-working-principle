@@ -1,5 +1,5 @@
 ---
-sidebarDepth: 4
+sidebarDepth: 3
 pageClass: custom-code-highlight
 ---
 
