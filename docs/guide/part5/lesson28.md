@@ -26,7 +26,7 @@ JavaScript 虽然有不少缺点，但是作为一门编程语言，它也能很
 所以要聊 WebComponent，得先看看 HTML 和 CSS 是如何阻碍前端组件化的，这里我们就通过下面这样一个简单的例子来分析下：
 
 
-```html
+```
 <style>
 p {
       background-color: brown;
@@ -36,7 +36,7 @@ p {
 <p>time.geekbang.org</p>
 ```
 
-```html
+```
 <style>
 p {
       background-color: red;
@@ -64,6 +64,7 @@ WebComponent 给出了解决思路，它提供了对局部视图封装能力，�
 下面我们就来演示下这 3 个技术是怎么实现数据封装的，如下面代码所
 
 下面我们就来演示下这 3 个技术是怎么实现数据封装的，如下面代码所示：
+
 
 ```html
 <!DOCTYPE html>
@@ -143,7 +144,7 @@ WebComponent 给出了解决思路，它提供了对局部视图封装能力，�
 
 总之，通过影子 DOM，我们就实现了 CSS 和元素的封装，在创建好封装影子 DOM 的类之后，我们就可以使用 `customElements.define` 来自定义元素了（可参考上述代码定义元素的方式）。
 
-最后，就很简单了，可以像正常使用 HTML 元素一样使用该元素，如上述代码中的`<geek-bang></geek-bang>`。
+> 最后，就很简单了，可以像正常使用 HTML 元素一样使用该元素，如上述代码中的`<geek-bang></geek-bang>`。
 
 
 上述代码最终渲染出来的页面，如下图所示：
