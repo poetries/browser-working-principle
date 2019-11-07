@@ -6,7 +6,7 @@ module.exports = ctx => ({
     '/': {
       lang: 'zh-CN',
       title: '浏览器工作原理与实践',
-      description: '浏览器工作原理与实践整理'
+      description: '极客浏览器工作原理与实践'
     }
   },
   head: [
