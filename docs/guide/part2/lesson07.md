@@ -14,9 +14,9 @@ pageClass: custom-code-highlight
 接下来咱们先看段代码，你觉得下面这段代码输出的结果是什么？
 
 ```js
-showName()
-console.log(myname)
-var myname = '极客时间'
+showName();
+console.log(myname);
+var myname = '极客时间';
 function showName() {
     console.log('函数showName被执行');
 }
@@ -36,8 +36,8 @@ function showName() {
 通过上面的执行结果，你应该已经知道了函数或者变量可以在定义之前使用，那如果使用没有定义的变量或者函数，JavaScript代码还能继续执行吗？为了验证这点，我们可以删除第3行变量myname的定义，如下所示：
 
 ```js
-showName()
-console.log(myname)
+showName();
+console.log(myname);
 function showName() {
     console.log('函数showName被执行');
 }
@@ -73,8 +73,8 @@ var myname = '极客时间'
 这段代码你可以把它看成是两行代码组成的：
 
 ```
-var myname    //声明部分
-myname = '极客时间'  //赋值部分
+var myname;    //声明部分
+myname = '极客时间';  //赋值部分
 ```
 
 ![](https://static001.geekbang.org/resource/image/ec/3c/ec882f2d9deec26ce168b409f274533c.png)
@@ -83,11 +83,11 @@ myname = '极客时间'  //赋值部分
 
 ```js
 function foo(){
-  console.log('foo')
+  console.log('foo');
 }
 
 var bar = function(){
-  console.log('bar')
+  console.log('bar');
 }
 ```
 
@@ -107,7 +107,7 @@ var bar = function(){
 */
 // 把变量 myname提升到开头，
 // 同时给myname赋值为undefined
-var myname = undefined
+var myname = undefined;
 // 把函数showName提升到开头
 function showName() {
     console.log('showName被调用');
@@ -116,10 +116,10 @@ function showName() {
 /*
 * 可执行代码部分
 */
-showName()
-console.log(myname)
+showName();
+console.log(myname);
 // 去掉var声明部分，保留赋值语句
-myname = '极客时间'
+myname = '极客时间';
 ```
 
 为了模拟变量提升的效果，我们对代码做了以下调整，如下图：
@@ -149,7 +149,7 @@ myname = '极客时间'
 **第一部分：变量提升部分的代码。**
 
 ```js
-var myname = undefined
+var myname = undefined;
 function showName() {
     console.log('函数showName被执行');
 }
@@ -158,9 +158,9 @@ function showName() {
 **第二部分：执行部分的代码。**
 
 ```js
-showName()
-console.log(myname)
-myname = '极客时间'
+showName();
+console.log(myname);
+myname = '极客时间';
 ```
 
 下面我们就可以把JavaScript的执行流程细化，如下图所示：
@@ -184,9 +184,9 @@ VariableEnvironment:
 了解完变量环境对象的结构后，接下来，我们再结合下面这段代码来分析下是如何生成变量环境对象的。
 
 ```js
-showName()
-console.log(myname)
-var myname = '极客时间'
+showName();
+console.log(myname);
+var myname = '极客时间';
 function showName() {
     console.log('函数showName被执行');
 }
@@ -200,9 +200,9 @@ function showName() {
 这样就生成了变量环境对象。接下来JavaScript引擎会把声明以外的代码编译为字节码，至于字节码的细节，我也会在后面文章中做详细介绍，你可以类比如下的模拟代码
 
 ```js
-showName()
-console.log(myname)
-myname = '极客时间'
+showName();
+console.log(myname);
+myname = '极客时间';
 ```
 
 好了，现在有了执行上下文和可执行代码了，那么接下来就到了执行阶段了。
@@ -265,12 +265,12 @@ showName();
 最后，看下面这段代码：
 
 ```js
-showName()
+showName();
 var showName = function() {
-    console.log(2)
-}
+    console.log(2);
+};
 function showName() {
-    console.log(1)
+    console.log(1);
 }
 ```
 
@@ -285,14 +285,14 @@ function showName() {
 编译阶段:
 
 ```
-var showName
-function showName(){console.log(1)}
+var showName;
+function showName(){console.log(1);}
 ```
 
 执行阶段:
 
 ```
-showName()//输出1
-showName=function(){console.log(2)}
+showName();//输出1
+showName=function(){console.log(2);}
 //如果后面再有showName执行的话，就输出2因为这时候函数引用已经变了
 ```
