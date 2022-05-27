@@ -18,7 +18,7 @@ pageClass: custom-code-highlight
 
 现代浏览器的设计目标是**安全、快速**和**稳定**，而这种核弹级杀伤力的安全问题就是一个很大的潜在威胁，因此在设计现代浏览器的体系架构时，需要解决这个问题。
 
-![](http://blog.poetries.top/img-repo/2019/11/110.png)
+![](https://static001.geekbang.org/resource/image/b8/b1/b83693a1ace43f43f9cab242982de6b1.png)
 
 观察上图，我们知道浏览器被划分为**浏览器内核**和**渲染内核**两个核心模块，其中浏览器内核是由网络进程、浏览器主进程和 GPU 进程组成的，渲染内核就是渲染进程。那如果我们在浏览器中打开一个页面，这两个模块是怎么配合的呢？
 
@@ -55,7 +55,7 @@ pageClass: custom-code-highlight
 
 了解了被安全沙箱保护的进程会有一系列的受限操作之后，接下来我们就可以分析渲染进程和浏览器内核各自都有哪些职责，如下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/111.png)
+![](https://static001.geekbang.org/resource/image/f8/1b/f8cc6394832ed238f18a01eff5726f1b.png)
 
 通过该图，我们可以看到由于渲染进程需要安全沙箱的保护，因此需要把在渲染进程内部涉及到和系统交互的功能都转移到浏览器内核中去实现。
 

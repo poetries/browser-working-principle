@@ -30,7 +30,7 @@ pageClass: custom-code-highlight
 
 基于以上三点，我们再来看看什么是虚拟 DOM。为了直观理解，你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/73.png)
+![](https://static001.geekbang.org/resource/image/cf/90/cf2089ad62af94881757c2f2de277890.png)
 
 该图是我结合 React 流程画的一张虚拟 DOM 执行流程图，下面我们就结合这张图来分析下虚拟 DOM 到底怎么运行的。
 
@@ -62,13 +62,13 @@ pageClass: custom-code-highlight
 
 关于 MVC 的基础结构，你可以先参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/74.png)
+![](https://static001.geekbang.org/resource/image/4c/a6/4c03b5882878dcce2df01c1e2e8db8a6.png)
 
 通过上图你可以发现，MVC 的整体结构比较简单，由模型、视图和控制器组成，其核心思想就是将数据和视图分离，也就是说视图和模型之间是不允许直接通信的，它们之间的通信都是通过控制器来完成的。通常情况下的通信路径是视图发生了改变，然后通知控制器，控制器再根据情况判断是否需要更新模型数据。当然还可以根据不同的通信路径和控制器不同的实现方式，基于 MVC 又能衍生出很多其他的模式，如 MVP、MVVM 等，不过万变不离其宗，它们的基础骨架都是基于 MVC 而来。
 
 所以在分析基于 React 或者 Vue 这些前端框架时，我们需要先重点把握大的 MVC 骨架结构，然后再重点查看通信方式和控制器的具体实现方式，这样我们就能从架构的视角来理解这些前端框架了。比如在分析 React 项目时，我们可以把 React 的部分看成是一个 MVC 中的视图，在项目中结合 Redux 就可以构建一个 MVC 的模型结构，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/75.png)
+![](https://static001.geekbang.org/resource/image/e0/03/e024ba6c212a1d6bfa01b327e987e103.png)
 
 在该图中，我们可以把虚拟 DOM 看成是 MVC 的视图部分，其控制器和模型都是由 Redux 提供的。其具体实现过程如下：
 

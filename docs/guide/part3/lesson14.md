@@ -23,7 +23,7 @@ pageClass: custom-code-highlight
 
 那编译器和解释器是如何“翻译”代码的呢？具体流程你可以参考下图
 
-![](http://blog.poetries.top/img-repo/2019/11/19.png)
+![](https://static001.geekbang.org/resource/image/4e/81/4e196603ecb78188e99e963e251b9781.png)
 
 从图中你可以看出这二者的执行流程，大致可阐述为如下：
 
@@ -35,7 +35,7 @@ pageClass: custom-code-highlight
 通过上面的介绍，相信你已经了解编译器和解释器了。那接下来，我们就重点分析下 V8 是如何执行一段 JavaScript 代码的。你可以先来“一览全局”，参考下图：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/20.png)
+![](https://static001.geekbang.org/resource/image/1a/ae/1af282bdc4036096c03074da53eb84ae.png)
 
 从图中可以清楚地看到，V8 在执行过程中既有解释器 Ignition，又有编译器 TurboFan，那么它们是如何配合去执行一段 JavaScript 代码的呢? 下面我们就按照上图来一一分解其执行流程。
 
@@ -60,7 +60,7 @@ foo()
 
 这段代码经过javascript-ast站点处理后，生成的 AST 结构如下：
 
-![](http://blog.poetries.top/img-repo/2019/11/21.png)
+![](https://static001.geekbang.org/resource/image/73/36/7320526ef14d974be8393effcf25b436.png)
 
 从图中可以看出，AST 的结构和代码的结构非常相似，其实你也可以把 AST 看成代码的结构化的表示，编译器或者解释器后续的工作都需要依赖于 AST，而不是源代码。
 
@@ -72,7 +72,7 @@ AST 是非常重要的一种数据结构，在很多项目中有着广泛的应�
 
 **第一阶段是分词（tokenize），又称为词法分析**，其作用是将一行行的源码拆解成一个个 token。所谓token，指的是语法上不可能再分的、最小的单个字符或字符串。你可以参考下图来更好地理解什么 token。
 
-![](http://blog.poetries.top/img-repo/2019/11/22.png)
+![](https://static001.geekbang.org/resource/image/83/f5/838028071f63a132cc8b27b23960e5f5.png)
 
 从图中可以看出，通过var myName = “极客时间”简单地定义了一个变量，其中关键字“var”、标识符“myName” 、赋值运算符“=”、字符串“极客时间”四个都是 token，而且它们代表的属性还不一样。
 
@@ -94,7 +94,7 @@ AST 是非常重要的一种数据结构，在很多项目中有着广泛的应�
 
 理解了什么是字节码，我们再来对比下高级代码、字节码和机器码，你可以参考下图
 
-![](http://blog.poetries.top/img-repo/2019/11/23.png)
+![](https://static001.geekbang.org/resource/image/87/ff/87d1ab147d1dc4b78488e2443d58a3ff.png)
 
 从图中可以看出，机器码所占用的空间远远超过了字节码，所以使用字节码可以减少系统的内存使用。
 
@@ -112,7 +112,7 @@ V8 的解释器和编译器的取名也很有意思。解释器 Ignition 是点�
 
 这么多语言的工作引擎都使用了“字节码 +JIT”技术，因此理解 JIT 这套工作机制还是很有必要的。你可以结合下图看看 JIT 的工作过程：
 
-![](http://blog.poetries.top/img-repo/2019/11/24.png)
+![](https://static001.geekbang.org/resource/image/c4/42/c401f7ed55884bca7c72ae94fd393142.png)
 
 ## JavaScript 的性能优化
 

@@ -18,7 +18,7 @@ pageClass: custom-code-highlight
 
 通过这些方式就大大提高了页面的下载速度，你可以通过下图来直观感受下：
 
-![](http://blog.poetries.top/img-repo/2019/11/83.png)
+![](https://static001.geekbang.org/resource/image/91/c5/91c3e0a8f13ebc4d81f08d8604f770c5.png)
 
 在该图中，引入了 CDN，并同时为每个域名维护 6 个连接，这样就大大减轻了整个资源的下载时间。这里我们可以简单计算下：如果使用单个 TCP 的持久连接，下载 100 个资源所花费的时间为 100 * n * RTT；若通过上面的技术，就可以把整个时间缩短为 100 * n * RTT/(6 * CDN 个数)。从这个计算结果来看，我们的页面加载速度变快了不少
 
@@ -75,7 +75,7 @@ pageClass: custom-code-highlight
 所以，HTTP/2 的解决方案可以总结为：一个域名只使用一个 TCP 长连接和消除队头阻塞问题。可以参考下图：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/84.png)
+![](https://static001.geekbang.org/resource/image/0c/85/0c4cb2c742e503ad7f549d74d66cfe85.png)
 
 该图就是 HTTP/2 最核心、最重要且最具颠覆性的多路复用机制。从图中你会发现每个请求都有一个对应的 ID，如 stream1 表示 index.html 的请求，stream2 表示 foo.css 的请求。这样在浏览器端，就可以随时将请求发送给服务器了。
 
@@ -88,7 +88,7 @@ HTTP/2 使用了多路复用技术，可以将请求分成一帧一帧的数据�
 
 现在我们知道为了解决 HTTP/1.1 存在的问题，HTTP/2 采用了多路复用机制，那 HTTP/2 是怎么实现多路复用的呢？你可以先看下面这张图：
 
-![](http://blog.poetries.top/img-repo/2019/11/85.png)
+![](https://static001.geekbang.org/resource/image/86/6a/86cdf01a3af7f4f755d28917e58aae6a.png)
 
 从图中可以看出，HTTP/2 添加了一个二进制分帧层，那我们就结合图来分析下 HTTP/2 的请求和接收过程。
 

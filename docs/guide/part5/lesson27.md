@@ -37,7 +37,7 @@ PWA，全称是 Progressive Web App，翻译过来就是渐进式网页应用。
 所以在 2014 年的时候，标准委员会就提出了 Service Worker 的概念，它的主要思想是在页面和网络之间增加一个拦截器，用来缓存和拦截请求。整体结构如下图所示：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/76.png)
+![](https://static001.geekbang.org/resource/image/23/12/23b97b087c346cdd378b26b2d158e812.png)
 
 在没有安装 Service Worker 之前，WebApp 都是直接通过网络模块来请求资源的。安装了 Service Worker 模块之后，WebApp 请求资源时，会先通过 Service Worker，让它判断是返回 Service Worker 缓存的资源还是重新去网络请求资源。一切的控制权都交由 Service Worker 来处理。
 

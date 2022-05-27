@@ -17,7 +17,7 @@ pageClass: custom-code-highlight
 
 首先我们来回顾下 JavaScript 的异步编程模型，你应该已经非常熟悉页面的事件循环系统了，也知道页面中任务都是执行在主线程之上的，相对于页面来说，主线程就是它整个的世界，所以在执行一项耗时的任务时，比如下载网络文件任务、获取摄像头等设备信息任务，这些任务都会放到页面主线程之外的进程或者线程中去执行，这样就避免了耗时任务“霸占”页面主线程的情况。你可以结合下图来看看这个处理过程：
 
-![](http://blog.poetries.top/img-repo/2019/11/43.png)
+![](https://static001.geekbang.org/resource/image/01/85/01e40e30db7e8a91eb70ce02fd8a6985.png)
 
 上图展示的是一个标准的异步编程模型，页面主线程发起了一个耗时的任务，并将任务交给另外一个进程去处理，这时页面主线程会继续执行消息队列中的任务。等该进程处理完这个任务后，会将该任务添加到渲染进程的消息队列中，并排队等待循环系统的处理。排队结束之后，循环系统会取出消息队列中的任务进行处理，并触发相关的回调操作。
 
@@ -58,7 +58,7 @@ xhr.send();
 
 由于我们重点关注的是输入内容（请求信息）和输出内容（回复信息），至于中间的异步请求过程，我们不想在代码里面体现太多，因为这会干扰核心的代码逻辑。整体思路如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/44.png)
+![](https://static001.geekbang.org/resource/image/83/5c/83dd5231c2e36c636c61af6a6dc80a5c.png)
 
 从图中你可以看到，我们将 XMLHttpRequest 请求过程的代码封装起来了，重点关注输入数据和输出结果。
 
@@ -236,7 +236,7 @@ x1.then(onResolve)
 
 **其次，需要将回调函数 onResolve 的返回值穿透到最外层**。因为我们会根据 onResolve 函数的传入值来决定创建什么类型的 Promise 任务，创建好的 Promise 对象需要返回到最外层，这样就可以摆脱嵌套循环了。你可以先看下面的代码：
 
-![](http://blog.poetries.top/img-repo/2019/11/45.png)
+![](https://static001.geekbang.org/resource/image/ef/7f/efcc4fcbebe75b4f6e92c89b968b4a7f.png)
 
 现在我们知道了 Promise 通过回调函数延迟绑定和回调函数返回值穿透的技术，解决了循环嵌套。
 

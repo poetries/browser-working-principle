@@ -9,7 +9,7 @@ pageClass: custom-code-highlight
 
 我们先从 HTTP 的明文传输的特性讲起，在上一个模块的三篇文章中我们分析过，起初设计 HTTP 协议的目的很单纯，就是为了传输超文本文件，那时候也没有太强的加密传输的数据需求，所以 HTTP 一直保持着明文传输数据的特征。但这样的话，在传输过程中的每一个环节，数据都有可能被窃取或者篡改，这也意味着你和服务器之间还可能有个中间人，你们在通信过程中的一切内容都在中间人的掌握中，如下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/112.png)
+![](https://static001.geekbang.org/resource/image/11/e2/118ced11537bd1e257f8df09380f33e2.png)
 
 从上图可以看出，我们使用 HTTP 传输的内容很容易被中间人窃取、伪造和篡改，通常我们把这种攻击方式称为**中间人攻击**
 
@@ -22,7 +22,7 @@ pageClass: custom-code-highlight
 从 HTTP 协议栈层面来看，我们可以在 TCP 和 HTTP 之间插入一个安全层，所有经过安全层的数据都会被加密或者解密，你可以参考下图：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/113.png)
+![](https://static001.geekbang.org/resource/image/9e/cf/9e99f797de30a15a11b0e4b4c8f810cf.png)
 
 从图中我们可以看出 HTTPS 并非是一个新的协议，通常 HTTP 直接和 TCP 通信，HTTPS 则先和安全层通信，然后安全层再和 TCP 层通信。也就是说 HTTPS 所有的安全核心都在安全层，它不会影响到上面的 HTTP 协议，也不会影响到下面的 TCP/IP，因此要搞清楚 HTTPS 是如何工作的，就要弄清楚安全层是怎么工作的。
 
@@ -38,7 +38,7 @@ pageClass: custom-code-highlight
 
 要在两台电脑上加解密同一个文件，我们至少需要知道加解密方式和密钥，因此，在 HTTPS 发送数据之前，浏览器和服务器之间需要协商加密方式和密钥，过程如下所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/114.png)
+![](https://static001.geekbang.org/resource/image/d8/3b/d86648267d5504c7813b2d692620503b.png)
 
 通过上图我们可以看出，HTTPS 首先要协商加解密方式，这个过程就是 HTTPS 建立安全连接的过程。为了让加密的密钥更加难以破解，我们让服务器和客户端同时决定密钥，具体过程如下：
 
@@ -58,7 +58,7 @@ pageClass: custom-code-highlight
 
 在 HTTPS 中，服务器会将其中的一个密钥通过明文的形式发送给浏览器，我们把这个密钥称为**公钥**，服务器自己留下的那个密钥称为**私钥**。顾名思义，**公钥是每个人都能获取到的，而私钥只有服务器才能知道，不对任何人公开**。下图是使用非对称加密改造的 HTTPS 协议：
 
-![](http://blog.poetries.top/img-repo/2019/11/115.png)
+![](https://static001.geekbang.org/resource/image/b2/50/b2b893921491c62b29aaddc1d4fa9550.png)
 
 根据该图，我们来分析下使用非对称加密的请求流程。
 
@@ -76,7 +76,7 @@ pageClass: custom-code-highlight
 
 基于以上两点原因，我们最终选择了一个更加完美的方案，那就是**在传输数据阶段依然使用对称加密，但是对称加密的密钥我们采用非对称加密来传输**。下图就是改造后的版本：
 
-![](http://blog.poetries.top/img-repo/2019/11/116.png)
+![](https://static001.geekbang.org/resource/image/b5/ac/b5bffdc1dd47cb1fa2180c62ae9c77ac.png)
 
 **从图中可以看出，改造后的流程是这样的：**
 
@@ -105,7 +105,7 @@ pageClass: custom-code-highlight
 
 接下来我们看看含有数字证书的 HTTPS 的请求流程，你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/117.png)
+![](https://static001.geekbang.org/resource/image/f5/f8/f509dedc99e740e57ff2c9d5cc8478f8.png)
 
 **相较于第三版的 HTTPS 协议，这里主要有两点改变：**
 

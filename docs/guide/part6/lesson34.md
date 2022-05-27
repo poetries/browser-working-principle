@@ -15,7 +15,7 @@ pageClass: custom-code-highlight
 
 我们结合下图来分析下 David 域名的被盗流程：
 
-![](http://blog.poetries.top/img-repo/2019/11/101.png)
+![](https://static001.geekbang.org/resource/image/3d/6b/3d7f097b1d6a8f93a960a12892f1556b.png)
 
 - 首先 David 发起登录 Gmail 邮箱请求，然后 Gmail 服务器返回一些登录状态给 David 的浏览器，这些信息包括了 Cookie、Session 等，这样在 David 的浏览器中，Gmail 邮箱就处于登录状态了。
 - 接着黑客通过各种手段引诱 David 去打开他的链接，比如 hacker.com，然后在 hacker.com 页面中，黑客编写好了一个邮件过滤器，并通过 Gmail 提供的 HTTP 设置接口设置好了新的邮件过滤功能，该过滤器会将 David 所有的邮件都转发到黑客的邮箱中。
@@ -31,7 +31,16 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 下面我们以极客时间官网为例子，来分析这三种攻击方式都是怎么实施的。这里假设极客时间具有转账功能，可以通过 POST 或 Get 来实现转账，转账接口如下所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/102.png)
+```
+# 同时支持 POST 和 Get
+# 接口 
+https://time.geekbang.org/sendcoin
+# 参数
+## 目标用户
+user
+## 目标金额
+number
+```
 
 有了上面的转账接口，我们就可以来模拟 CSRF 攻击了。
 
@@ -39,7 +48,16 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 黑客最容易实施的攻击方式是自动发起 Get 请求，具体攻击方式你可以参考下面这段代码：
 
-![](http://blog.poetries.top/img-repo/2019/11/103.png)
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1> 黑客的站点：CSRF 攻击演示 </h1>
+    <img src="https://time.geekbang.org/sendcoin?user=hacker&number=100">
+  </body>
+</html>
+
+```
 
 这是黑客页面的 HTML 代码，在这段代码中，黑客将转账的请求接口隐藏在 img 标签内，欺骗浏览器这是一张图片资源。当该页面被加载时，浏览器会自动发起 img 的资源请求，如果服务器没有对该请求做判断的话，那么服务器就会认为该请求是一个转账请求，于是用户账户上的 100 极客币就被转移到黑客的账户上去了。
 
@@ -47,7 +65,20 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 除了自动发送 Get 请求之外，有些服务器的接口是使用 POST 方法的，所以黑客还需要在他的站点上伪造 POST 请求，当用户打开黑客的站点时，是自动提交 POST 请求，具体的方式你可以参考下面示例代码：
 
-![](http://blog.poetries.top/img-repo/2019/11/104.png)
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1> 黑客的站点：CSRF 攻击演示 </h1>
+  <form id='hacker-form' action="https://time.geekbang.org/sendcoin" method=POST>
+    <input type="hidden" name="user" value="hacker" />
+    <input type="hidden" name="number" value="100" />
+  </form>
+  <script> document.getElementById('hacker-form').submit(); </script>
+</body>
+</html>
+
+```
 
 在这段代码中，我们可以看到黑客在他的页面中构建了一个隐藏的表单，该表单的内容就是极客时间的转账接口。当用户打开该站点之后，这个表单会被自动执行提交；当表单被提交之后，服务器就会执行转账操作。因此使用构建自动提交表单这种方式，就可以自动实现跨站点 POST 数据提交。
 
@@ -55,7 +86,15 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 除了自动发起 Get 和 Post 请求之外，还有一种方式是诱惑用户点击黑客站点上的链接，这种方式通常出现在论坛或者恶意邮件上。黑客会采用很多方式去诱惑用户点击链接，示例代码如下所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/105.png)
+```html
+<div>
+  <img width=150 src=http://images.xuejuzi.cn/1612/1_161230185104_1.jpg> </img> </div> <div>
+  <a href="https://time.geekbang.org/sendcoin?user=hacker&number=100" taget="_blank">
+    点击下载美女照片
+  </a>
+</div>
+
+```
 
 这段黑客站点代码，页面上放了一张美女图片，下面放了图片下载地址，而这个下载地址实际上是黑客用来转账的接口，一旦用户点击了这个链接，那么他的极客币就被转到黑客账户上了。
 
@@ -90,7 +129,9 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 在 HTTP 响应头中，通过 set-cookie 字段设置 Cookie 时，可以带上 SameSite 选项，如下：
 
-![](http://blog.poetries.top/img-repo/2019/11/106.png)
+```
+set-cookie: 1P_JAR=2019-10-20-06; expires=Tue, 19-Nov-2019 06:36:21 GMT; path=/; domain=.google.com; SameSite=none
+```
 
 **SameSite 选项通常有 Strict、Lax 和 None 三个值。**
 
@@ -108,13 +149,13 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 **Referer 是 HTTP 请求头中的一个字段，记录了该 HTTP 请求的来源地址**。比如我从极客时间的官网打开了 InfoQ 的站点，那么请求头中的 Referer 值是极客时间的 URL，如下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/107.png)
+![](https://static001.geekbang.org/resource/image/15/c9/159430e9d15cb7bcfa4fd014da31a2c9.png)
 
 虽然可以通过 Referer 告诉服务器 HTTP 请求的来源，但是有一些场景是不适合将来源 URL 暴露给服务器的，因此浏览器提供给开发者一个选项，可以不用上传 Referer 值，具体可参考**Referrer Policy**
 
 但在服务器端验证请求头中的 Referer 并不是太可靠，因此标准委员会又制定了**Origin 属性**，在一些重要的场合，比如通过 XMLHttpRequest、Fecth 发起跨站请求或者通过 Post 方法发送请求时，都会带上 Origin 属性，如下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/108.png)
+![](https://static001.geekbang.org/resource/image/25/03/258dc5542db8961aaa23ec0c02030003.png)
 
 从上图可以看出，Origin 属性只包含了域名信息，并没有包含具体的 URL 路径，这是 Origin 和 Referer 的一个主要区别。在这里需要补充一点，Origin 的值之所以不包含详细路径信息，是有些站点因为安全考虑，不想把源站点的详细路径暴露给服务器。
 
@@ -126,7 +167,20 @@ CSRF 英文全称是 Cross-site request forgery，所以又称为“跨站请求
 
 第一步，在浏览器向服务器发起请求时，服务器生成一个 CSRF Token。CSRF Token 其实就是服务器生成的字符串，然后将该字符串植入到返回的页面中。你可以参考下面示例代码：
 
-![](http://blog.poetries.top/img-repo/2019/11/109.png)
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <form action="https://time.geekbang.org/sendcoin" method="POST">
+      <input type="hidden" name="csrf-token" value="nc98P987bcpncYhoadjoiydc9ajDlcn">
+      <input type="text" name="user">
+      <input type="text" name="number">
+      <input type="submit">
+    </form>
+</body>
+</html>
+
+```
 
 第二步，在浏览器端如果要发起转账的请求，那么需要带上页面中的 CSRF Token，然后服务器会验证该 Token 是否合法。如果是从第三方站点发出的请求，那么将无法获取到 CSRF Token 的值，所以即使发出了请求，服务器也会因为 CSRF Token 不正确而拒绝请求。
 

@@ -54,7 +54,7 @@ foo()
 
 当执行到第 6 行代码时，其调用栈和堆空间状态图如下所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/10.png)
+![](https://static001.geekbang.org/resource/image/45/97/45ddbe30f4dedfca9e5c879bdba60c97.png)
 
 从图中可以看出，原始类型的数据被分配到栈中，引用类型的数据会被分配到堆中。当 foo 函数执行结束之后，foo 函数的执行上下文会从堆中被销毁掉，那么它是怎么被销毁的呢？下面我们就来分析一下。
 
@@ -64,7 +64,7 @@ foo()
 
 你可能会有点懵，ESP 指针向下移动怎么就能把 showName 的执行上下文销毁了呢？具体你可以看下面这张移动 ESP 前后的对比图
 
-![](http://blog.poetries.top/img-repo/2019/11/11.png)
+![](https://static001.geekbang.org/resource/image/b1/3b/b1f0573287b487016334c3f8ec23073b.png)
 
 从图中可以看出，当 showName 函数执行结束之后，ESP 向下移动到 foo 函数的执行上下文中，上面 showName 的执行上下文虽然保存在栈内存中，但是已经是无效内存了。比如当 foo 函数再次调用另外一个函数时，这块内容会被直接覆盖掉，用来存放另外一个函数的执行上下文。
 
@@ -74,7 +74,7 @@ foo()
 
 通过上面的讲解，我想现在你应该已经知道，当上面那段代码的 foo 函数执行结束之后，ESP 应该是指向全局执行上下文的，那这样的话，showName 函数和 foo 函数的执行上下文就处于无效状态了，不过保存在堆中的两个对象依然占用着空间，如下图所示
 
-![](http://blog.poetries.top/img-repo/2019/11/12.png)
+![](https://static001.geekbang.org/resource/image/e8/8c/e80ff553417572f77973b08256b6928c.png)
 
 从图中可以看出，1003 和 1050 这两块内存依然被占用。要回收堆中的垃圾数据，就需要用到 JavaScript 中的垃圾回收器了。
 
@@ -120,7 +120,7 @@ foo()
 
 新生代中用Scavenge 算法来处理。所谓 Scavenge 算法，是把新生代空间对半划分为两个区域，一半是对象区域，一半是空闲区域，如下图所示
 
-![](http://blog.poetries.top/img-repo/2019/11/13.png)
+![](https://static001.geekbang.org/resource/image/4f/af/4f9310c7da631fa5a57f871099bfbeaf.png)
 
 新加入的对象都会存放到对象区域，当对象区域快被写满时，就需要执行一次垃圾清理操作。
 
@@ -143,18 +143,18 @@ foo()
 比如最开始的那段代码，当 showName 函数执行退出之后，这段代码的调用栈和堆空间如下图所示：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/14.png)
+![](https://static001.geekbang.org/resource/image/6c/69/6c8361d3e52c1c37a06699ed94652e69.png)
 
 从上图你可以大致看到垃圾数据的标记过程，当 showName 函数执行结束之后，ESP 向下移动，指向了 foo 函数的执行上下文，这时候如果遍历调用栈，是不会找到引用 1003 地址的变量，也就意味着 1003 这块数据为垃圾数据，被标记为红色。由于 1050 这块数据被变量 b 引用了，所以这块数据会被标记为活动对象。这就是大致的标记过程。
 
 接下来就是垃圾的清除过程。它和副垃圾回收器的垃圾清除过程完全不同，你可以理解这个过程是清除掉红色标记数据的过程，可参考下图大致理解下其清除过程：
 
-![](http://blog.poetries.top/img-repo/2019/11/15.png)
+![](https://static001.geekbang.org/resource/image/d0/85/d015db8ad0df7f0ccb1bdb8e31f96e85.png)
 
 上面的标记过程和清除过程就是标记 - 清除算法，不过对一块内存多次执行标记 - 清除算法后，会产生大量不连续的内存碎片。而碎片过多会导致大对象无法分配到足够的连续内存，于是又产生了另外一种算法——标记 - 整理（Mark-Compact），这个标记过程仍然与标记 - 清除算法里的是一样的，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。你可以参考下图
 
 
-![](http://blog.poetries.top/img-repo/2019/11/16.png)
+![](https://static001.geekbang.org/resource/image/65/8c/652bd2df726d0aa5e67fe8489f39a18c.png)
 
 ## 全停顿
 
@@ -162,13 +162,13 @@ foo()
 
 比如堆中的数据有 1.5GB，V8 实现一次完整的垃圾回收需要 1 秒以上的时间，这也是由于垃圾回收而引起 JavaScript 线程暂停执行的时间，若是这样的时间花销，那么应用的性能和响应能力都会直线下降。主垃圾回收器执行一次完整的垃圾回收流程如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/17.png)
+![](https://static001.geekbang.org/resource/image/98/0c/9898646a08b46bce4f12f918f3c1e60c.png)
 
 在 V8 新生代的垃圾回收中，因其空间较小，且存活对象较少，所以全停顿的影响不大，但老生代就不一样了。如果在执行垃圾回收的过程中，占用主线程时间过久，就像上面图片展示的那样，花费了 200 毫秒，在这 200 毫秒内，主线程是不能做其他事情的。比如页面正在执行一个 JavaScript 动画，因为垃圾回收器在工作，就会导致这个动画在这 200 毫秒内无法执行的，这将会造成页面的卡顿现象。
 
 为了降低老生代的垃圾回收而造成的卡顿，V8 将标记过程分为一个个的子标记过程，同时让垃圾回收标记和 JavaScript 应用逻辑交替进行，直到标记阶段完成，我们把这个算法称为增量标记（Incremental Marking）算法。如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/18.png)
+![](https://static001.geekbang.org/resource/image/de/e7/de117fc96ae425ed90366e9060aa14e7.png)
 
 使用增量标记算法，可以把一个完整的垃圾回收任务拆分为很多小的任务，这些小的任务执行时间比较短，可以穿插在其他的 JavaScript 任务中间执行，这样当执行上述动画效果时，就不会让用户因为垃圾回收任务而感受到页面的卡顿了。
 

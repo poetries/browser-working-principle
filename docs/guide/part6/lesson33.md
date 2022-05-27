@@ -32,7 +32,7 @@ XSS 全称是 Cross Site Scripting，为了与“CSS”区分开来，故简称 
 
 我们先来看看存储型 XSS 攻击是怎么向 HTML 文件中注入恶意脚本的，你可以参考下图
 
-![](http://blog.poetries.top/img-repo/2019/11/93.png)
+![](https://static001.geekbang.org/resource/image/2e/14/2ed3d8b93035df3c2bcfcc223dc47914.png)
 
 通过上图，我们可以看出存储型 XSS 攻击大致需要经过如下步骤：
 
@@ -41,21 +41,21 @@ XSS 全称是 Cross Site Scripting，为了与“CSS”区分开来，故简称 
 - 当用户浏览该页面的时候，恶意脚本就会将用户的 Cookie 信息等数据上传到服务器。
 - 下面我们来看个例子，2015 年喜马拉雅就被曝出了存储型 XSS 漏洞。起因是在用户设置专辑名称时，服务器对关键字过滤不严格，比如可以将专辑名称设置为一段 JavaScript，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/94.png)
+![](https://static001.geekbang.org/resource/image/54/49/5479e94a06d9a7cdf3920c60bf834249.png)
 
 当黑客将专辑名称设置为一段 JavaScript 代码并提交时，喜马拉雅的服务器会保存该段 JavaScript 代码到数据库中。然后当用户打开黑客设置的专辑时，这段代码就会在用户的页面里执行（如下图），这样就可以获取用户的 Cookie 等数据信息
 
-![](http://blog.poetries.top/img-repo/2019/11/95.png)
+![](https://static001.geekbang.org/resource/image/ef/3a/efaf4123438f37da4c7366b87ed1403a.png)
 
 当用户打开黑客设置的专辑页面时，服务器也会将这段恶意 JavaScript 代码返回给用户，因此这段恶意脚本就在用户的页面中执行了。
 
 恶意脚本可以通过 XMLHttpRequest 或者 Fetch 将用户的 Cookie 数据上传到黑客的服务器，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/96.png)
+![](https://static001.geekbang.org/resource/image/b1/cb/b19300e39a753774f4a94635b46af7cb.png)
 
 黑客拿到了用户 Cookie 信息之后，就可以利用 Cookie 信息在其他机器上登录该用户的账号（如下图），并利用用户账号进行一些恶意操作。
 
-![](http://blog.poetries.top/img-repo/2019/11/97.png)
+![](https://static001.geekbang.org/resource/image/72/52/720c6daf21a8adf55329af9eaa5ab052.png)
 
 以上就是存储型 XSS 攻击的一个典型案例，这是乌云网在 2015 年曝出来的，虽然乌云网由于某些原因被关停了，但是你依然可以通过这个站点来查看乌云网的一些备份信息。
 
@@ -98,12 +98,12 @@ module.exports = router;
 
 上面这两段代码，第一段是路由，第二段是视图，作用是将 URL 中 xss 参数的内容显示在页面。我们可以在本地演示下，比如打开http://localhost:3000/?xss=123这个链接，这样在页面中展示就是“123”了（如下图），是正常的，没有问题的。
 
-![](http://blog.poetries.top/img-repo/2019/11/98.png)
+![](https://static001.geekbang.org/resource/image/7e/db/7ecb717abadfff2637a168d39f0c3cdb.png)
 
 
 > 但当打开`http://localhost:3000/?xss=<script>alert('你被xss攻击了')</script>`这段 URL 时，其结果如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/99.png)
+![](https://static001.geekbang.org/resource/image/4d/fa/4dff7d83fe2eecc6cb52c126b4f650fa.png)
 
 通过这个操作，我们会发现用户将一段含有恶意代码的请求提交给 Web 服务器，Web 服务器接收到请求时，又将恶意代码反射给了浏览器端，这就是反射型 XSS 攻击。在现实生活中，黑客经常会通过 QQ 群或者邮件等渠道诱导用户去点击这些恶意链接，所以对于一些链接我们一定要慎之又慎。
 
@@ -172,7 +172,7 @@ set-cookie: NID=189=M8q2FtWbsR8RlcldPVt7qkrqR38LmFY9jUxkKo3-4Bi6Qu_ocNOat7nkYZUT
 
 我们可以看到，set-cookie 属性值最后使用了 HttpOnly 来标记该 Cookie。顾名思义，使用 HttpOnly 标记的 Cookie 只能使用在 HTTP 请求过程中，所以无法通过 JavaScript 来读取这段 Cookie。我们还可以通过 Chrome 开发者工具来查看哪些 Cookie 被标记了 HttpOnly，如下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/100.png)
+![](https://static001.geekbang.org/resource/image/de/bb/defa78c90a4e8f0debb09564561ab9bb.png)
 
 从图中可以看出，NID 这个 Cookie 的 HttpOlny 属性是被勾选上的，所以 NID 的内容是无法通过 document.cookie 是来读取的。
 

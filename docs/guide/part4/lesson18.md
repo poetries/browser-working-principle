@@ -64,7 +64,7 @@ pageClass: custom-code-highlight
 
 但实际情况是我们不能控制的，比如在你调用 setTimeout 来设置回调任务的间隙，消息队列中就有可能被插入很多系统级的任务。你可以打开 Performance 工具，来记录下这段任务的执行过程，也可参考文中我记录的图片：
 
-![](http://blog.poetries.top/img-repo/2019/11/40.png)
+![](https://static001.geekbang.org/resource/image/3c/15/3c2b9b474c4df544df61ebd62a7b3715.png)
 
 setTimeout 函数触发的回调函数都是宏任务，如图中，左右两个黄色块就是 setTimeout 触发的两个定时器任务。
 
@@ -107,8 +107,8 @@ setTimeout 函数触发的回调函数都是宏任务，如图中，左右两个
 
 为了直观地理解什么是微任务，你可以参考下面我画的示意图（由于内容比较多，我将其分为了两张）：
 
-![](http://blog.poetries.top/img-repo/2019/11/41.png)
-![](http://blog.poetries.top/img-repo/2019/11/42.png)
+![](https://static001.geekbang.org/resource/image/83/88/839f468be3d683019c309e0acd8cd788.png)
+![](https://static001.geekbang.org/resource/image/1d/92/1db319c879610816c0cfea22723fc492.png)
 
 该示意图是在执行一个 ParseHTML 的宏任务，在执行过程中，遇到了 JavaScript 脚本，那么就暂停解析流程，进入到 JavaScript 的执行环境。从图中可以看到，全局上下文中包含了微任务列表。
 

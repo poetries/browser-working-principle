@@ -19,13 +19,13 @@ Chrome 开发者工具有很多重要的面板，比如与性能相关的有网�
 
 你可以在浏览器窗口的右上方选择 Chrome 菜单，然后选择“更多工具–> 开发者工具”来打开 Chrome 开发者工具。打开的页面如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/49.png)
+![](https://static001.geekbang.org/resource/image/68/8d/68edf7b09e33b5481b49dc76967b838d.png)
 
 从图中可以看出，它一共包含了 10 个功能面板，包括了 Elements、Console、Sources、NetWork、Performance、Memory、Application、Security、Audits 和 Layers。
 
 关于这 10 个面板的大致功能，我做了一个表格，感兴趣的话，你可以详细看下：
 
-![](http://blog.poetries.top/img-repo/2019/11/50.png)
+![](https://static001.geekbang.org/resource/image/c5/82/c5eb9603e79547ae3d815254e24d4782.png)
 
 简单来说，Chrome 开发者工具为我们提供了通过界面访问或者编辑 DOM 和 CSSOM 的能力，还提供了强大的调试功能和查看性能指标的能力。
 
@@ -36,13 +36,13 @@ OK，接下来我们就要重点看下其中重要的 Network 面板，即网络
 网络面板由控制器、过滤器、抓图信息、时间线、详细列表和下载信息概要这 6 个区域构成（如下图所示）。
 
 
-![](http://blog.poetries.top/img-repo/2019/11/51.png)
+![](https://static001.geekbang.org/resource/image/46/57/46fba54f54b9bd43918308f9f1ae1357.png)
 
 **1. 控制器**
 
 其中，控制器有 4 个比较重要的功能，我们按照下文中的这张图来简单介绍下。
 
-![](http://blog.poetries.top/img-repo/2019/11/52.png)
+![](https://static001.geekbang.org/resource/image/f0/42/f02477088c0499247e0ed37f46ad2a42.png)
 
 - 红色圆点的按钮，表示“开始 / 暂停抓包”，这个功能很常见，很容易理解。
 - “全局搜索”按钮，这个功能就非常重要了，可以在所有下载资源中搜索相关内容，还可以快速定位到某几个你想要的文件上。
@@ -86,13 +86,13 @@ OK，接下来我们就要重点看下其中重要的 Network 面板，即网络
 
 另外，你也可以按照列表的属性来给列表排序，默认情况下，列表是按请求发起的时间来排序的，最早发起请求的资源在顶部。当然也可以按照返回状态码、请求类型、请求时长、内容大小等基础属性排序，只需点击相应属性即可。
 
-![](http://blog.poetries.top/img-repo/2019/11/53.png)
+![](https://static001.geekbang.org/resource/image/7b/81/7b296e168a4900d3b5cb8e57cc3f6181.png)
 
 **2. 详细信息**
 
 如果你选中详细列表中的一项，右边就会出现该项的详细信息，如下所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/54.png)
+![](https://static001.geekbang.org/resource/image/f7/e6/f76ee3b6b2e6e9629efdd01e6ded57e6.png)
 
 你可以在此查看请求列表中任意一项的请求行和请求头信息，还可以查看响应行、响应头和响应体。然后你可以根据这些查看的信息来判断你的业务逻辑是否正确，或者有时候也可以用来逆向推导别人网站的业务逻辑。
 
@@ -100,14 +100,14 @@ OK，接下来我们就要重点看下其中重要的 Network 面板，即网络
 
 了解了每个资源的详细请求信息之后，我们再来分析单个资源请求时间线，这就涉及具体的 HTTP 请求流程了。
 
-![](http://blog.poetries.top/img-repo/2019/11/55.png)
+![](https://static001.geekbang.org/resource/image/1f/e0/1f4f8c194b02975f6d2848b7b73175e0.png)
 
 我们再回顾下在《03 | HTTP 请求流程：为什么很多站点第二次打开速度会很快？》这篇文章，我们介绍过发起一个 HTTP 请求之后，浏览器首先查找缓存，如果缓存没有命中，那么继续发起 DNS 请求获取 IP 地址，然后利用 IP 地址和服务器端建立 TCP 连接，再发送 HTTP 请求，等待服务器响应；不过，如果服务器响应头中包含了重定向的信息，那么整个流程就需要重新再走一遍。这就是在浏览器中一个 HTTP 请求的基础流程。
 
 那详细列表中是如何表示出这个流程的呢？这就要重点看下时间线面板了
 
 
-![](http://blog.poetries.top/img-repo/2019/11/56.png)
+![](https://static001.geekbang.org/resource/image/ba/af/ba91f06503bda4b4dc4a54901bd7a8af.png)
 
 那面板中这各项到底是什么含义呢？
 

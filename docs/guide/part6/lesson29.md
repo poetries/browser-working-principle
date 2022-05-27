@@ -20,7 +20,7 @@ pageClass: custom-code-highlight
 - 服务器接收请求信息之后，读取对应的 HTML 文件，并将数据以 ASCII 字符流返回给客户端。
 - HTML 文档传输完成后，断开连接。
 
-![](http://blog.poetries.top/img-repo/2019/11/79.png)
+![](https://static001.geekbang.org/resource/image/db/34/db1166c68c22a45c9858e88a234f1a34.png)
 
 总的来说，当时的需求很简单，就是用来传输体积很小的 HTML 文件，所以 HTTP/0.9 的实现有以下三个特点。
 
@@ -44,7 +44,7 @@ HTTP/0.9 虽然简单，但是已经可以满足当时的需求了。不过变�
 这种简单的交流型形式无疑不能满足传输多种类型文件的需求，那为了让客户端和服务器能更深入地交流，HTTP/1.0 引入了请求头和响应头，它们都是以为 Key-Value 形式保存的，在 HTTP 发送请求时，会带上请求头信息，服务器返回数据时，会先返回响应头信息。至于 HTTP/1.0 具体的请求流程，你可以参考下图。
 
 
-![](http://blog.poetries.top/img-repo/2019/11/80.png)
+![](https://static001.geekbang.org/resource/image/b5/7d/b52b0d1a26ff2b8607c08e5c50ae687d.png)
 
 有了请求头和响应头，浏览器和服务器就能进行更加深入的交流了。
 
@@ -94,13 +94,13 @@ HTTP/1.0 除了对多文件提供良好的支持外，还依据当时实际的�
 
 HTTP/1.0 每进行一次 HTTP 通信，都需要经历建立 TCP 连接、传输 HTTP 数据和断开 TCP 连接三个阶段（如下图）。
 
-![](http://blog.poetries.top/img-repo/2019/11/81.png)
+![](https://static001.geekbang.org/resource/image/cc/7d/cccc9faf6d0addea8e1bf307cd7d8d7d.png)
 
 在当时，由于通信的文件比较小，而且每个页面的引用也不多，所以这种传输形式没什么大问题。但是随着浏览器普及，单个页面中的图片文件越来越多，有时候一个页面可能包含了几百个外部引用的资源文件，如果在下载每个文件的时候，都需要经历建立 TCP 连接、传输数据和断开连接这样的步骤，无疑会增加大量无谓的开销。
 
 为了解决这个问题，HTTP/1.1 中增加了持久连接的方法，它的特点是在一个 TCP 连接上可以传输多个 HTTP 请求，只要浏览器或者服务器没有明确断开连接，那么该 TCP 连接会一直保持。
 
-![](http://blog.poetries.top/img-repo/2019/11/82.png)
+![](https://static001.geekbang.org/resource/image/80/1a/80b57830e15faa17631bea74054a0e1a.png)
 
 
 从上图可以看出，HTTP 的持久连接可以有效减少 TCP 建立连接和断开连接的次数，这样的好处是减少了服务器额外的负担，并提升整体 HTTP 的请求时长。

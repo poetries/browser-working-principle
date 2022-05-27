@@ -33,7 +33,7 @@ pageClass: custom-code-highlight
 
 前面我们说过代码从网络传输过来是字节流的形式，那么后续字节流是如何转换为 DOM 的呢？你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/57.png)
+![](https://static001.geekbang.org/resource/image/1b/8c/1bfcd419acf6402c20ffc1a5b1909d8c.png)
 
 从图中你可以看出，字节流转换为 DOM 需要三个阶段。
 
@@ -42,7 +42,7 @@ pageClass: custom-code-highlight
 前面《14 | 编译器和解释器：V8 是如何执行一段 JavaScript 代码的？》文章中我们介绍过，V8 编译 JavaScript 过程中的第一步是做词法分析，将 JavaScript 先分解为一个个 Token。解析 HTML 也是一样的，需要通过分词器先将字节流转换为一个个 Token，分为 Tag Token 和文本 Token。上述 HTML 代码通过词法分析生成的 Token 如下所示：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/58.png)
+![](https://static001.geekbang.org/resource/image/b1/ac/b16d2fbb77e12e376ac0d7edec20ceac.png)
 
 由图可以看出，Tag Token 又分 StartTag 和 EndTag，比如<body>就是 StartTag ，</body>就是EndTag，分别对于图中的蓝色和红色块，文本 Token 对应的绿色块。
 
@@ -71,24 +71,24 @@ pageClass: custom-code-highlight
 
 这里需要补充说明下，HTML 解析器开始工作时，会默认创建了一个根为 document 的空 DOM 结构，同时会将一个 StartTag document 的 Token 压入栈底。然后经过分词器解析出来的第一个 StartTag html Token 会被压入到栈中，并创建一个 html 的 DOM 节点，添加到 document 上，如下图所示
 
-![](http://blog.poetries.top/img-repo/2019/11/59.png)
+![](https://static001.geekbang.org/resource/image/7a/f1/7a6cd022bd51a3f274cd994b1398bef1.png)
 
 然后按照同样的流程解析出来 StartTag body 和 StartTag div，其 Token 栈和 DOM 的状态如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/60.png)
+![](https://static001.geekbang.org/resource/image/8c/a5/8c7ba966cebb0050b81c0385ffb4f2a5.png)
 
 接下来解析出来的是第一个 div 的文本 Token，渲染引擎会为该 Token 创建一个文本节点，并将该 Token 添加到 DOM 中，它的父节点就是当前 Token 栈顶元素对应的节点，如下图所示：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/61.png)
+![](https://static001.geekbang.org/resource/image/dc/af/dc0ddd4e3bf3569555f4b1ebec7a8caf.png)
 
 再接下来，分词器解析出来第一个 EndTag div，这时候 HTML 解析器会去判断当前栈顶的元素是否是 StartTag div，如果是则从栈顶弹出 StartTag div，如下图所示
 
-![](http://blog.poetries.top/img-repo/2019/11/62.png)
+![](https://static001.geekbang.org/resource/image/c4/a6/c4a255a8881ef9d21e419aa010ce24a6.png)
 
 按照同样的规则，一路解析，最终结果如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/63.png)
+![](https://static001.geekbang.org/resource/image/aa/2e/aabf14cde38b058c5203195db82ec22e.png)
 
 通过上面的介绍，相信你已经清楚 DOM 是怎么生成的了。不过在实际生产环境中，HTML 源文件中既包含 CSS 和 JavaScript，又包含图片、音频、视频等文件，所以处理过程远比上面这个示范 Demo 复杂。不过理解了这个简单的 Demo 生成过程，我们就可以往下分析更加复杂的场景了。
 
@@ -113,7 +113,7 @@ pageClass: custom-code-highlight
 
 通过前面 DOM 生成流程分析，我们已经知道当解析到 script 脚本标签时，其 DOM 树结构如下所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/64.png)
+![](https://static001.geekbang.org/resource/image/41/54/4150e27b332fab9f5a10bfafb524ff54.png)
 
 这时候 HTML 解析器暂停工作，JavaScript 引擎介入，并执行 script 标签中的这段脚本，因为这段 JavaScript 脚本修改了 DOM 中第一个 div 中的内容，所以执行这段脚本之后，div 节点内容已经修改为 time.geekbang 了。脚本执行完成之后，HTML 解析器恢复解析过程，继续解析后续的内容，直至生成最终的 DOM。
 

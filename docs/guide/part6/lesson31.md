@@ -18,19 +18,19 @@ HTTP/2 的一个核心特性是使用了多路复用技术，因此它可以通�
 
 接下来我们就来分析下 HTTP/1.1 协议栈中 TCP 是如何传输数据的。为直观理解，你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/86.png)
+![](https://static001.geekbang.org/resource/image/c2/f0/c231ab4b825df8b6f730f484fce596f0.png)
 
 通过上图你会发现，从一端发送给另外一端的数据会被拆分为一个个按照顺序排列的数据包，这些数据包通过网络传输到了接收端，接收端再按照顺序将这些数据包组合成原始数据，这样就完成了数据传输。
 
 不过，如果在数据传输的过程中，有一个数据因为网络故障或者其他原因而丢包了，那么整个 TCP 的连接就会处于暂停状态，需要等待丢失的数据包被重新传输过来。你可以把 TCP 连接看成是一个按照顺序传输数据的管道，管道中的任意一个数据丢失了，那之后的数据都需要等待该数据的重新传输。为了直观理解，你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/87.png)
+![](https://static001.geekbang.org/resource/image/33/96/33d2b4c14a7a2f19ef6677696b67de96.png)
 
 我们就把在 TCP 传输过程中，由于单个数据包的丢失而造成的阻塞称为 TCP 上的队头阻塞。
 
 那队头阻塞是怎么影响 HTTP/2 传输的呢？首先我们来看正常情况下 HTTP/2 是怎么传输多路请求的，为了直观理解，你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/88.png)
+![](https://static001.geekbang.org/resource/image/48/d1/4837434655a6d87f1bf5e3d899a698d1.png)
 
 通过该图，我们知道在 HTTP/2 中，多个请求是跑在一个 TCP 管道中的，如果其中任意一路数据流中出现了丢包的情况，那么就会阻塞该 TCP 连接中的所有请求。这不同于 HTTP/1.1，使用 HTTP/1.1 时，浏览器为每个域名开启了 6 个 TCP 连接，如果其中的 1 个 TCP 连接发生了队头阻塞，那么其他的 5 个连接依然可以继续传输数据。
 
@@ -43,7 +43,7 @@ HTTP/2 的一个核心特性是使用了多路复用技术，因此它可以通�
 为了搞清楚 TCP 协议建立连接的延迟问题，我们还是先来回顾下网络延迟的概念，这会有助于你对后面内容的理解。网络延迟又称为 RTT（Round Trip Time）。我们把从浏览器发送一个数据包到服务器，再从服务器返回数据包到浏览器的整个往返时间称为 RTT（如下图）。RTT 是反映网络性能的一个重要指标。
 
 
-![](http://blog.poetries.top/img-repo/2019/11/89.png)
+![](https://static001.geekbang.org/resource/image/e9/4f/e98927e19b20349815fb8f499067cb4f.png)
 
 那建立 TCP 连接时，需要花费多少个 RTT 呢？下面我们来计算下。
 
@@ -75,7 +75,7 @@ HTTP/2 存在一些比较严重的与 TCP 协议相关的缺陷，但由于 TCP 
 因此，HTTP/3 选择了一个折衷的方法——UDP 协议，基于 UDP 实现了类似于 TCP 的多路数据流、传输可靠性等功能，我们把这套功能称为QUIC 协议。关于 HTTP/2 和 HTTP/3 协议栈的比较，你可以参考下图：
 
 
-![](http://blog.poetries.top/img-repo/2019/11/90.png)
+![](https://static001.geekbang.org/resource/image/0b/c6/0bae470bb49747b9a59f9f4bb496a9c6.png)
 
 通过上图我们可以看出，HTTP/3 中的 QUIC 协议集合了以下几点功能。
 
@@ -83,7 +83,7 @@ HTTP/2 存在一些比较严重的与 TCP 协议相关的缺陷，但由于 TCP 
 - 集成了 TLS 加密功能。目前 QUIC 使用的是 TLS1.3，相较于早期版本 TLS1.3 有更多的优点，其中最重要的一点是减少了握手所花费的 RTT 个数。
 - 实现了 HTTP/2 中的多路复用功能。和 TCP 不同，QUIC 实现了在同一物理连接上可以有多个独立的逻辑数据流（如下图）。实现了数据流的单独传输，就解决了 TCP 中队头阻塞的问题。
 
-![](http://blog.poetries.top/img-repo/2019/11/91.png)
+![](https://static001.geekbang.org/resource/image/05/9a/05cc5720989aec75730ee4cb7e7c149a.png)
 
 实现了快速握手功能。由于 QUIC 是基于 UDP 的，所以 QUIC 可以实现使用 0-RTT 或者 1-RTT 来建立连接，这意味着 QUIC 可以用最快的速度来发送和接收数据，这样可以大大提升首次打开页面的速度。
 

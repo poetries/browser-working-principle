@@ -149,7 +149,7 @@ WebComponent 给出了解决思路，它提供了对局部视图封装能力，�
 
 上述代码最终渲染出来的页面，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/77.png)
+![](https://static001.geekbang.org/resource/image/57/7c/579c65e2d2221f4e476c7846b842c27c.png)
 
 从图中我们可以看出，影子 DOM 内部的样式是不会影响到全局 CSSOM 的。另外，使用 DOM 接口也是无法直接查询到影子 DOM 内部元素的，比如你可以使用document.getElementsByTagName('div')来查找所有 div 元素，这时候你会发现影子 DOM 内部的元素都是无法查找的，因为要想查找影子 DOM 内部的元素需要专门的接口，所以通过这种方式又将影子内部的 DOM 和外部的 DOM 进行了隔离。
 
@@ -164,7 +164,7 @@ WebComponent 给出了解决思路，它提供了对局部视图封装能力，�
 
 那么浏览器是如何实现影子 DOM 的呢？下面我们就来分析下，如下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/78.png)
+![](https://static001.geekbang.org/resource/image/5b/22/5bce3d00c8139a7fde9cc90f9d803322.png)
 
 该图是上面那段示例代码对应的 DOM 结构图，从图中可以看出，我们使用了两次 geek-bang 属性，那么就会生成两个影子 DOM，并且每个影子 DOM 都有一个 shadow root 的根节点，我们可以将要展示的样式或者元素添加到影子 DOM 的根节点上，每个影子 DOM 你都可以看成是一个独立的 DOM，它有自己的样式、自己的属性，内部样式不会影响到外部样式，外部样式也不会影响到内部样式。
 

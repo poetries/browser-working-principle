@@ -59,7 +59,7 @@ doWork(callback)
 
 这里还需要补充一点，那就是当循环系统在执行一个任务的时候，都要为这个任务维护一个系统调用栈。这个系统调用栈类似于 JavaScript 的调用栈，只不过系统调用栈是 Chromium 的开发语言 C++ 来维护的，其完整的调用栈信息你可以通过 chrome://tracing/ 来抓取。当然，你也可以通过 Performance 来抓取它核心的调用信息，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/35.png)
+![](https://static001.geekbang.org/resource/image/d3/77/d3d66afb1a103103e5c3f86c823efb77.png)
 
 这幅图记录了一个 Parse HTML 的任务执行过程，其中黄色的条目表示执行 JavaScript 的过程，其他颜色的条目表示浏览器内部系统的执行过程。
 
@@ -76,7 +76,7 @@ doWork(callback)
 
 理解了什么是同步回调和异步回调，接下来我们就来分析 XMLHttpRequest 背后的实现机制，具体工作过程你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/36.png)
+![](https://static001.geekbang.org/resource/image/29/c6/2914a052f4f249a52077692a22ee5cc6.png)
 
 这是 XMLHttpRequest 的总执行流程图，下面我们就来分析从发起请求到接收数据的完整流程。
 
@@ -162,7 +162,7 @@ onreadystatechange，用来监控后台请求过程中的状态，比如可以�
 
 我们还可以通过xhr.responseType = "text"来配置服务器返回的格式，将服务器返回的数据自动转换为自己想要的格式，如果将 responseType 的值设置为 json，那么系统会自动将服务器返回的数据转换为 JavaScript 对象格式。下面的图表是我列出的一些返回类型的描述：
 
-![](http://blog.poetries.top/img-repo/2019/11/37.png)
+![](https://static001.geekbang.org/resource/image/85/bf/856d1965676fafa46122e3ad1235dfbf.png)
 
 假如你还需要添加自己专用的请求头属性，可以通过 xhr.setRequestHeader 来添加。
 
@@ -240,12 +240,12 @@ Access to XMLHttpRequest at 'https://time.geekbang.org/' from origin 'https://ww
 
 通常，如果 HTTPS 请求页面中使用混合内容，浏览器会针对 HTTPS 混合内容显示警告，用来向用户表明此 HTTPS 页面包含不安全的资源。比如打开站点 https://www.iteye.com/groups ，可以通过控制台看到混合内容的警告，参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/38.png)
+![](https://static001.geekbang.org/resource/image/4b/63/4b4a210a1e078d9a26fe31e6eab34963.png)
 
 
 从上图可以看出，通过 HTML 文件加载的混合资源，虽然给出警告，但大部分类型还是能加载的。而使用 XMLHttpRequest 请求时，浏览器认为这种请求可能是攻击者发起的，会阻止此类危险的请求。比如我通过浏览器打开地址 https://www.iteye.com/groups ，然后通过控制台，使用 XMLHttpRequest 来请求 http://img-ads.csdn.net/2018/201811150919211586.jpg ，这时候请求就会报错，出错信息如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/39.png)
+![](https://static001.geekbang.org/resource/image/46/a1/46c22d4e54815942c1a86f11b14516a1.png)
 
 ## 总结
 

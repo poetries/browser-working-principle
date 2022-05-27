@@ -132,7 +132,7 @@ foo()
 
 你也可以打开 Performance 来看看其执行过程，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/33.png)
+![](https://static001.geekbang.org/resource/image/1a/4f/1adf4da8ca4315cfb565e798649bd74f.png)
 
 从图中可以看到，执行 foo 函数所消耗的时长是 500 毫秒，这也就意味着通过 setTimeout 设置的任务会被推迟到 500 毫秒以后再去执行，而设置 setTimeout 的回调延迟时间是 0。
 
@@ -150,7 +150,7 @@ setTimeout(cb, 0);
 
 你还是可以通过 Performance 来记录下这段代码的执行过程，如下图所示
 
-![](http://blog.poetries.top/img-repo/2019/11/34.png)
+![](https://static001.geekbang.org/resource/image/cb/cd/cbb3b2b1ac8eb4752a585df5445412cd.png)
 
 上图中的竖线就是定时器的函数回调过程，从图中可以看出，前面五次调用的时间间隔比较小，嵌套调用超过五次以上，后面每次的调用最小时间间隔是 4 毫秒。之所以出现这样的情况，是因为在 Chrome 中，定时器被嵌套调用 5 次以上，系统会判断该函数方法被阻塞了，如果定时器的调用时间间隔小于 4 毫秒，那么浏览器会将每次调用的时间间隔设置为 4 毫秒。下面是Chromium 实现 4 毫秒延迟的代码，你可以看下：
 

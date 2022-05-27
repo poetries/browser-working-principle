@@ -23,7 +23,7 @@ pageClass: custom-code-highlight
 
 我们先来分析如何系统优化加载阶段中的页面，还是先看一个典型的渲染流水线，如下图所示
 
-![](http://blog.poetries.top/img-repo/2019/11/68.png)
+![](https://static001.geekbang.org/resource/image/92/0a/925058a17cfbedff54e746db798c500a.png)
 
 观察上面这个渲染流水线，你能分析出来有哪些因素影响了页面加载速度吗？下面我们就先来分析下这个问题。
 
@@ -53,7 +53,7 @@ pageClass: custom-code-highlight
 
 我们先来看看交互阶段的渲染流水线（如下图）。和加载阶段的渲染流水线有一些不同的地方是，在交互阶段没有了加载关键资源和构建 DOM、CSSOM 流程，通常是由 JavaScript 触发交互动画的。
 
-![](http://blog.poetries.top/img-repo/2019/11/69.png)
+![](https://static001.geekbang.org/resource/image/4a/0c/4a942e53f9358c9c4634c310335cc10c.png)
 
 结合上图，我们来一起回顾下交互阶段是如何生成一个帧的。大部分情况下，生成一个新的帧都是由 JavaScript 通过修改 DOM 或者 CSSOM 来触发的。还有另外一部分帧是由 CSS 来触发的。
 
@@ -104,7 +104,7 @@ pageClass: custom-code-highlight
 
 对于上面这段代码，我们可以使用 Performance 工具来记录添加元素的过程，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/70.png)
+![](https://static001.geekbang.org/resource/image/32/c9/32b6a645646f99fc3517fb0b5e003cc9.png)
 
 从图中可以看出来，执行 JavaScript 添加元素是在一个任务中执行的，重新计算样式布局是在另外一个任务中执行，这就是正常情况下的布局操作。
 
@@ -130,7 +130,7 @@ function foo() {
 
 同样，你可以看下面通过 Performance 记录的任务状态：
 
-![](http://blog.poetries.top/img-repo/2019/11/71.png)
+![](https://static001.geekbang.org/resource/image/ce/d9/ce951be7a38e2ef1a9a23a1c7e84b1d9.png)
 
 从上图可以看出来，计算样式和布局都是在当前脚本执行过程中触发的，这就是强制同步布局。
 
@@ -169,7 +169,7 @@ function foo() {
 
 我们在一个 for 循环语句里面不断读取属性值，每次读取属性值之前都要进行计算样式和布局。执行代码之后，使用 Performance 记录的状态如下所示
 
-![](http://blog.poetries.top/img-repo/2019/11/72.png)
+![](https://static001.geekbang.org/resource/image/36/87/36159f7081e37ce4714b20ce2630e987.png)
 
 从上图可以看出，在 foo 函数内部重复执行计算样式和布局，这会大大影响当前函数的执行效率。这种情况的避免方式和强制同步布局一样，都是尽量不要在修改 DOM 结构时再去查询一些相关值。
 

@@ -35,7 +35,7 @@ void MainThread(){
 
 在上面的执行代码中，我们把所有任务代码按照顺序写进主线程里，等线程执行时，这些任务会按照顺序在线程中依次被执行；等所有任务执行完成之后，线程会自动退出。可以参考下图来直观地理解下其执行过程：
 
-![](http://blog.poetries.top/img-repo/2019/11/25.png)
+![](https://static001.geekbang.org/resource/image/72/bc/72726678ac6604116c1d5dad160780bc.png)
 
 ## 在线程运行过程中处理新任务
 
@@ -71,7 +71,7 @@ void MainThread(){
 
 通过引入事件循环机制，就可以让该线程“活”起来了，我们每次输入两个数字，都会打印出两数字相加的结果，你可以结合下图来参考下这个改进版的线程：
 
-![](http://blog.poetries.top/img-repo/2019/11/26.png)
+![](https://static001.geekbang.org/resource/image/9e/e3/9e0f595324fbd5b7cd1c1ae1140f7de3.png)
 
 ## 处理其他线程发送过来的任务
 
@@ -79,7 +79,7 @@ void MainThread(){
 
 那下面我们就来看看其他线程是如何发送消息给渲染主线程的，具体形式你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/27.png)
+![](https://static001.geekbang.org/resource/image/2e/05/2eb6a8ecb7cb528da4663573d74eb305.png)
 
 从上图可以看出，渲染主线程会频繁接收到来自于 IO 线程的一些任务，接收到这些任务之后，渲染进程就需要着手处理，比如接收到资源加载完成的消息后，渲染进程就要着手进行 DOM 解析了；接收到鼠标点击的消息后，渲染主线程就要开始执行相应的 JavaScript 脚本来处理该点击事件。
 
@@ -87,13 +87,13 @@ void MainThread(){
 
 一个通用模式是使用消息队列。在解释如何实现之前，我们先说说什么是消息队列，可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/28.png)
+![](https://static001.geekbang.org/resource/image/6d/5e/6d141ec0925590d83d97a37cce8e6f5e.png)
 
 从图中可以看出，消息队列是一种数据结构，可以存放要执行的任务。它符合队列“先进先出”的特点，也就是说要添加任务的话，添加到队列的尾部；要取出任务的话，从队列头部去取。
 
 有了队列之后，我们就可以继续改造线程模型了，改造方案如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/29.png)
+![](https://static001.geekbang.org/resource/image/2a/ab/2ac6bc0361cb4690c5cc83d8abad22ab.png)
 
 从上图可以看出，我们的改造可以分为下面三个步骤：
 
@@ -141,7 +141,7 @@ task_queue.pushTask(clickTask)
 
 通过使用消息队列，我们实现了线程之间的消息通信。在 Chrome 中，跨进程之间的任务也是频繁发生的，那么如何处理其他进程发送过来的任务？你可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/30.png)
+![](https://static001.geekbang.org/resource/image/e2/c6/e2582e980632fd2df5043f81a11461c6.png)
 
 从图中可以看出，渲染进程专门有一个 IO 线程用来接收其他进程传进来的消息，接收到消息之后，会将这些消息组装成任务发送给渲染主线程，后续的步骤就和前面讲解的“处理其他线程发送的任务”一样了，这里就不再重复了。
 
@@ -202,7 +202,7 @@ void MainThread(){
 
 因为所有的任务都是在单线程中执行的，所以每次只能执行一个任务，而其他任务就都处于等待状态。如果其中一个任务执行时间过久，那么下一个任务就要等待很长时间。可以参考下图：
 
-![](http://blog.poetries.top/img-repo/2019/11/31.png)
+![](https://static001.geekbang.org/resource/image/8d/cc/8de4b43fca99b180fdffe6a5af07b5cc.png)
 
 从图中你可以看到，如果在执行动画过程中，其中有个 JavaScript 任务因执行时间过久，占用了动画单帧的时间，这样会给用户制造了卡顿的感觉，这当然是极不好的用户体验。针对这种情况，JavaScript 可以通过回调功能来规避这种问题，也就是让要执行的 JavaScript 任务滞后执行。至于浏览器是如何实现回调功能的，我们在后面的章节中再详细介绍。
 
@@ -212,7 +212,7 @@ void MainThread(){
 
 你可以打开开发者工具，点击“Performance”标签，选择左上角的“start porfiling and load page”来记录整个页面加载过程中的事件执行情况，如下图所示：
 
-![](http://blog.poetries.top/img-repo/2019/11/32.png)
+![](https://static001.geekbang.org/resource/image/c0/1b/c0d59d5b58e387f30cc39ceb4d54f31b.png)
 
 从图中可以看出，我们点击展开了 Main 这个项目，其记录了主线程执行过程中的所有任务。图中灰色的就是一个个任务，每个任务下面还有子任务，其中的 Parse HTML 任务，是把 HTML 解析为 DOM 的任务。值得注意的是，在执行 Parse HTML 的时候，如果遇到 JavaScript 脚本，那么会暂停当前的 HTML 解析而去执行 JavaScript 脚本。
 
